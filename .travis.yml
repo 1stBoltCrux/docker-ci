@@ -1,0 +1,25 @@
+# any time we use docker we need admin permission
+# so we let travis know
+
+sudo: required
+services:
+  - docker
+
+# things needed before we start to deploy our project
+# or run out tests
+
+# the tag-name we are adding here (tedleary/docker-ci) is
+# so we can refer to this build without the randomly generated id
+# we can use any name in this yml file, but keeping it 'dockerish'
+# for consistency's sake
+
+before_install:
+  - docker build -t tedleary/docker-ci -f Dockerfile.dev .
+
+  # script section contains all the actual commands we need to run
+  # our test suite. the '-- --coverage' is because by default our
+  # test suite delivers us to an input screen after completing which
+  # travis would just hang on - this way makes sure to complete and exit
+
+script:
+  - docker run tedleary/docker-ci npm run test -- --coverage
