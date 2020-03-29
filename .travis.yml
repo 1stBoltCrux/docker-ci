@@ -6,7 +6,7 @@ services:
   - docker
 
 # things needed before we start to deploy our project
-# or run out tests
+# or run our tests
 
 # the tag-name we are adding here (tedleary/docker-ci) is
 # so we can refer to this build without the randomly generated id
@@ -22,4 +22,4 @@ before_install:
   # travis would just hang on - this way makes sure to complete and exit
 
 script:
-  - docker run tedleary/docker-ci npm run test -- --coverage
+  - docker run -e CI=true tedleary/docker-ci npm run test -- --coverage
