@@ -23,3 +23,25 @@ before_install:
 
 script:
   - docker run -e CI=true tedleary/docker-ci npm run test -- --coverage
+
+deploy:
+# avoid missing bucket_name error by using experimental version of dpl script
+# 'dpl' is the name of travis' deployment tool
+  edge: true
+# travis ci comes with a selection of pre-defined providers
+  provider: elasticbeanstalk
+# amazon region
+  region: us-west-2
+  app: docker-ci
+# elastic beanstalk environment name
+  env: DockerCi-env
+#  s3 bucket that is auto generated for you upon creation of environment
+  bucket_name: elasticbeanstalk-us-west-2-774894317416
+# the bucket path or directory default is exactly equal to the app's name
+  bucket_path: "docker-ci"
+# the branch to deploy
+  on:
+    branch: master
+# tell travis to look for aws keys in it's local env variables
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
