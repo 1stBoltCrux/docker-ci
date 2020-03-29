@@ -13,6 +13,7 @@ RUN npm run build
 # new FROM statement terminates previous block
 
 FROM nginx as run
+EXPOSE 80
 # /app/build <----- all the stuff
 # look back at builder phase, grab build folder, place
 # files in directory within nginx (reference dockerhub nginx docs)
